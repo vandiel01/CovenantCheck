@@ -1,0 +1,8 @@
+## Author: Vandiel
+## Interface: 100007
+## Notes: Check Necrolord or Venthyr Mirror
+## Title: .|TInterface\BUTTONS\UI-CheckBox-Check:0|t Covenant Check
+## Version:1.0
+### No Saved Variables
+
+CovenantCheck.lua
