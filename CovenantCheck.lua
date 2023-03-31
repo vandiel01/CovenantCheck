@@ -11,52 +11,63 @@ local CovPic = {{ 926,52,85, }, { 856,60,83, }, { 770,75,75, }, { 696,70,90, }}
 function Necrolord_WQ_List()
 	vCovChk_ResultArea:SetText("")
 	wipe(CovCheckTable)
-	Necrolord_World_Quest = {
-		-- Pet Battles
-		61867, 61870, 61866, 61868, -- 1 to 4
-		-- World Quest
-		57205, 59703, 61352, 61353, 58605, 61343, 59836, 61342, -- 5 to 35
-		57650, 58207, 61477, 58490, 61141, 61708, 61667, 61189,
-		58221, 61540, 61539, 59234, 66617, 61841, 61699, 58437,
-		58505, 59642, 61060, 60211, 60231, 59743, 58601,		
-		-- Callings
-		60423, 60426, 62694, 60433, 60390, 60393, 60398, 60396, -- 36 to 55
-		60459, 60440, 60443, 60445, 60449, 60416, 60455, 60402,
-		60405, 60411, 60408, 60429, 
-		-- World Boss
-		66617, 61816,	-- 56 to 57
+		Necrolord_World_Quest = {
+		-- Pet Battles					-- 1 to 4
+		61867, 61870, 61866, 61868, 
+		-- World Quest					-- 5 to 35
+		57205, 59703, 61352, 61353, 
+		58605, 61343, 59836, 61342,
+		57650, 58207, 61477, 58490,
+		61141, 61708, 61667, 61189,
+		58221, 61540, 61539, 59234,
+		66617, 61841, 61699, 58437,
+		58505, 59642, 61060, 60211,
+		60231, 59743, 58601,
+		-- Callings						-- 36 to 55
+		60423, 60426, 62694, 60433,
+		60390, 60393, 60398, 60396,
+		60459, 60440, 60443, 60445,
+		60449, 60416, 60402, 60455,
+		60405, 60411, 60408, 60429,
+		-- World Boss					-- 56
+		61816,	
+		-- Profession					-- 57 to 69
+		61607, 61610, 61611, 61612, 	-- Cook, Fish, Inscrip, Jewel
+		61614, 61608, 61609, 61615, 	-- Skin, Ench, Eng, Tailor
+		61537, 61545, 61605, 61613, 	-- Mine, Herb, Alch, Leather
+		61606, 							-- Black
 	}
-	Necrolord_WQ_Title = { "|CFF0088EEPet Battle|r", "|CFFFBFF55World Quest|r", "|CFF00EE00Callings|r (Inc Last Callings)", "|CFFEE9900World Boss|r (Mald Only)", }
+	Necrolord_WQ_Title = { "Pet Battle", "World Quest", "Callings (Inc Last Callings)", "World Boss (Mald Only)", "Profession (In Case)", }
 	
-	tinsert(CovCheckTable,
+	tinsert(WoWTweakTable,
 		( "As of "..date("%I:%M"..(date("%p", time())=="AM" and "a" or "p").." CST", time()).."\n" )
 	)
 	for g, n in pairs(Necrolord_World_Quest) do
 		a = C_TaskQuest.IsActive(n)
 		c = C_QuestLog.IsQuestFlaggedCompleted(n)
-		
-		if ( a == nil or c == nil ) then return end
-
-		local Title = 
-			( g == 1 and Necrolord_WQ_Title[1].."\n" or 					-- 1 to 4 Pet Battles
-				( g == 5 and Necrolord_WQ_Title[2].."\n" or					-- 5 to 35 World Quest
-					( g == 36 and Necrolord_WQ_Title[3].."\n" or			-- 36 to 55 Callings
-						( g == 56 and Necrolord_WQ_Title[4].."\n" or "" )	-- 56 World Boss
+		local Title =
+			( g == 1 and Necrolord_WQ_Title[1].."\n" or							-- Pet Battles
+				( g == 5 and Necrolord_WQ_Title[2].."\n" or						-- World Quest
+					( g == 36 and Necrolord_WQ_Title[3].."\n" or 				-- Callings
+						( g == 56 and Necrolord_WQ_Title[4].."\n" or			-- World Boss
+							( g == 57 and Necrolord_WQ_Title[5].."\n" or "" )	-- Profession
+						)
 					)
 				)
 			)
-		tinsert(CovCheckTable,Title)
+		
+		tinsert(WoWTweakTable,Title)
 		if ( a or c ) then
-			local Extra = 
-				( n == 58605 and " (Anima)" or 
-					( (n == 61343 or n == 59836 or n == 61342 ) and " (Sync)" or "" )
-				)
-			tinsert(CovCheckTable,
+			tinsert(WoWTweakTable,
 			--	( (c and ":x: " or ":mag: ").."["..n.."] "..C_QuestLog.GetTitleForQuestID(n)..Extra.."\n" ) -- Verify Quest ID
-				( (c and ":x: " or ":mag: ")..(C_QuestLog.GetTitleForQuestID(n) == nil and CheckAPIRepeat(n) or C_QuestLog.GetTitleForQuestID(n))..Extra.."\n" )
+				(	(c and ":x: " or ":mag: ")..
+					( C_QuestLog.GetTitleForQuestID(n) == nil and CheckAPIRepeat(n) or C_QuestLog.GetTitleForQuestID(n) )..
+					( ( n == 61343 or n == 59836 or n == 61342 ) and " (Sync)" or "" )..
+					"\n"
+				)
 			)
 		end
-		tinsert(CovCheckTable,( ( g == 4 or g == 35 or g == 55 ) and "\n" or "" ) )
+		tinsert(WoWTweakTable,( ( g == 4 or g == 35 or g == 55 or g == 56 ) and "\n" or "" ) )
 	end
 	vCovChk_ResultArea:SetText(table.concat(CovCheckTable,""))
 end
