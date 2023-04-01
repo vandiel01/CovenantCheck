@@ -31,11 +31,6 @@ function Necrolord_WQ_List()
 		60405, 60411, 60408, 60429,
 		-- World Boss					-- 56
 		61816,	
-		-- Profession					-- 57 to 69
-		61607, 61610, 61611, 61612, 	-- Cook, Fish, Inscrip, Jewel
-		61614, 61608, 61609, 61615, 	-- Skin, Ench, Eng, Tailor
-		61537, 61545, 61605, 61613, 	-- Mine, Herb, Alch, Leather
-		61606, 							-- Black
 	}
 	Necrolord_WQ_Title = { "Pet Battle", "World Quest", "Callings (Inc Last Callings)", "World Boss (Mald Only)", "Profession (In Case)", }
 	
@@ -49,9 +44,7 @@ function Necrolord_WQ_List()
 			( g == 1 and Necrolord_WQ_Title[1].."\n" or							-- Pet Battles
 				( g == 5 and Necrolord_WQ_Title[2].."\n" or						-- World Quest
 					( g == 36 and Necrolord_WQ_Title[3].."\n" or 				-- Callings
-						( g == 56 and Necrolord_WQ_Title[4].."\n" or			-- World Boss
-							( g == 57 and Necrolord_WQ_Title[5].."\n" or "" )	-- Profession
-						)
+						( g == 56 and Necrolord_WQ_Title[4].."\n" or "" )		-- World Boss
 					)
 				)
 			)
@@ -67,9 +60,9 @@ function Necrolord_WQ_List()
 				)
 			)
 		end
-		tinsert(WoWTweakTable,( ( g == 4 or g == 35 or g == 55 or g == 56 ) and "\n" or "" ) )
+		tinsert(WoWTweakTable,( ( g == 4 or g == 35 or g == 55 ) and "\n" or "" ) )
 	end
-	vCovChk_ResultArea:SetText(table.concat(CovCheckTable,""))
+	vNWQ_ResultArea:SetText(table.concat(WoWTweakTable,""))
 end
 ------------------------------------------------------------------------
 -- Check World Quest for Necrolord (Recheck to prevent NIL if possible)
