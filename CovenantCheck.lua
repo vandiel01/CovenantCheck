@@ -32,10 +32,10 @@ function Necrolord_WQ_List()
 		-- World Boss					-- 56
 		61816,	
 	}
-	Necrolord_WQ_Title = { "Pet Battle", "World Quest", "Callings (Inc Last Callings)", "World Boss (Mald Only)", "Profession (In Case)", }
+	Necrolord_WQ_Title = { "|cff4F77FFPet Battle|r", "|cffFFFE22World Quest|r", "|cff22FFF9Callings|r (Inc Last Callings)", "|cffFFAD22World Boss|r  (Mald Only)", }
 	
 	tinsert(WoWTweakTable,
-		( "As of "..date("%I:%M"..(date("%p", time())=="AM" and "a" or "p").." CST", time()).."\n" )
+		( "As of "..date("%I:%M"..(date("%p", time())=="AM" and "a" or "p").." CST", time()).."\n\n" )
 	)
 	for g, n in pairs(Necrolord_World_Quest) do
 		a = C_TaskQuest.IsActive(n)
@@ -145,7 +145,7 @@ end
 -------------------------------------------------------
 	local vCovChk_Result = CreateFrame("Frame", "vCovChk_Result", UIParent, BackdropTemplateMixin and "BackdropTemplate")
 		vCovChk_Result:SetBackdrop(defaultBackdrop)
-		vCovChk_Result:SetSize(215, 245)
+		vCovChk_Result:SetSize(230, 255)
 		vCovChk_Result:ClearAllPoints()
 		vCovChk_Result:EnableMouse(true)
 		vCovChk_Result:SetMovable(true)
