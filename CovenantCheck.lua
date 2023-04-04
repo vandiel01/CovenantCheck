@@ -44,7 +44,7 @@ function Necrolord_WQ_List()
 			( g == 1 and Necrolord_WQ_Title[1].."\n" or							-- Pet Battles
 				( g == 5 and Necrolord_WQ_Title[2].."\n" or						-- World Quest
 					( g == 36 and Necrolord_WQ_Title[3].."\n" or 				-- Callings
-						( g == 56 and Necrolord_WQ_Title[4].."\n" or "" )		-- World Boss
+						( ( ( C_TaskQuest.IsActive(61816) and g == 56 ) and Necrolord_WQ_Title[4].."\n" ) or "" )		-- World Boss
 					)
 				)
 			)
