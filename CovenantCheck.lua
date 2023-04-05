@@ -9,51 +9,45 @@ local CovPic = {{ 926,52,85, }, { 856,60,83, }, { 770,75,75, }, { 696,70,90, }}
 -- Check World Quest for Necrolord
 ------------------------------------------------------------------------
 function Necrolord_WQ_List()
-	vCovChk_ResultArea:SetText("")
-	wipe(CovCheckTable)
-		Necrolord_World_Quest = {
+	vNWQ_ResultArea:SetText("")
+	wipe(WoWTweakTable)
+	
+	Necrolord_World_Quest = {
 		-- Pet Battles					-- 1 to 4
 		61867, 61870, 61866, 61868, 
 		-- World Quest					-- 5 to 35
-		57205, 59703, 61352, 61353, 
-		58605, 61343, 59836, 61342,
-		57650, 58207, 61477, 58490,
-		61141, 61708, 61667, 61189,
-		58221, 61540, 61539, 59234,
-		66617, 61841, 61699, 58437,
-		58505, 59642, 61060, 60211,
-		60231, 59743, 58601,
+		57205, 59703, 61352, 61353, 58605, 61343, 59836, 61342, 57650, 58207,
+		61477, 58490, 61141, 61708, 61667, 61189, 58221, 61540, 61539, 59234,
+		66617, 61841, 61699, 58437, 58505, 59642, 61060, 60211,	60231, 59743, 58601,
 		-- Callings						-- 36 to 55
-		60423, 60426, 62694, 60433,
-		60390, 60393, 60398, 60396,
-		60459, 60440, 60443, 60445,
-		60449, 60416, 60402, 60455,
-		60405, 60411, 60408, 60429,
+		60423, 60426, 62694, 60433,	60390, 60393, 60398, 60396, 60459, 60440,
+		60443, 60445, 60449, 60416, 60402, 60455, 60405, 60411, 60408, 60429,
 		-- World Boss					-- 56
 		61816,	
 	}
-	Necrolord_WQ_Title = { "|cff4F77FFPet Battle|r", "|cffFFFE22World Quest|r", "|cff22FFF9Callings|r (Inc Last Callings)", "|cffFFAD22World Boss|r  (Mald Only)", }
-	
+	local NL_WQ_T = { "Pet Battle", "World Quest", "Callings (Maldraxxus)", "World Boss", } -- Titles
+	local NL_WQ_C = { "85C1E9", "76D7C4", "F9E79F", "F8C471", }	--Title Colors (HTML Color Code Method)
+
 	tinsert(WoWTweakTable,
-		( "As of "..date("%I:%M"..(date("%p", time())=="AM" and "a" or "p").." CST", time()).."\n\n" )
+		( "As of |CFF00FFFF"..date("%I:%M"..(date("%p", time())=="AM" and "a" or "p").." CST", time()).."|r\n\n" )
 	)
 	for g, n in pairs(Necrolord_World_Quest) do
-		a = C_TaskQuest.IsActive(n)
-		c = C_QuestLog.IsQuestFlaggedCompleted(n)
 		local Title =
-			( g == 1 and Necrolord_WQ_Title[1].."\n" or							-- Pet Battles
-				( g == 5 and Necrolord_WQ_Title[2].."\n" or						-- World Quest
-					( g == 36 and Necrolord_WQ_Title[3].."\n" or 				-- Callings
-						( ( ( C_TaskQuest.IsActive(61816) and g == 56 ) and Necrolord_WQ_Title[4].."\n" ) or "" )		-- World Boss
+			( g == 1 and "|CFF"..NL_WQ_C[1]..NL_WQ_T[1].."|r\n" or			-- Pet Battles
+				( g == 5 and "|CFF"..NL_WQ_C[2]..NL_WQ_T[2].."|r\n" or		-- World Quest
+					( g == 36 and "|CFF"..NL_WQ_C[3]..NL_WQ_T[3].."|r\n" or 	-- Callings
+						( ( ( C_TaskQuest.IsActive(61816) and g == 56 ) and "|CFF"..NL_WQ_C[4]..NL_WQ_T[4].."|r\n" ) or "" )	-- World Boss
 					)
 				)
 			)
-		
 		tinsert(WoWTweakTable,Title)
+		
+		local a = C_TaskQuest.IsActive(n)
+		local c = C_QuestLog.IsQuestFlaggedCompleted(n)
 		if ( a or c ) then
 			tinsert(WoWTweakTable,
-			--	( (c and ":x: " or ":mag: ").."["..n.."] "..C_QuestLog.GetTitleForQuestID(n)..Extra.."\n" ) -- Verify Quest ID
-				(	(c and ":x: " or ":mag: ")..
+				(
+					( C_QuestLog.IsQuestFlaggedCompleted(n) and "|CFFFF0000:x:|r " or "|CFFFFFF00:mag:|r " )..
 					( C_QuestLog.GetTitleForQuestID(n) == nil and CheckAPIRepeat(n) or C_QuestLog.GetTitleForQuestID(n) )..
 					( ( n == 61343 or n == 59836 or n == 61342 ) and " (Sync)" or "" )..
 					"\n"
@@ -62,7 +56,8 @@ function Necrolord_WQ_List()
 		end
 		tinsert(WoWTweakTable,( ( g == 4 or g == 35 or g == 55 ) and "\n" or "" ) )
 	end
-	vNWQ_ResultArea:SetText(table.concat(WoWTweakTable,""))
+	
+	vNWQ_ResultArea:SetText("|CFFFFFFFF"..table.concat(WoWTweakTable,"").."|r")
 end
 ------------------------------------------------------------------------
 -- Check World Quest for Necrolord (Recheck to prevent NIL if possible)
